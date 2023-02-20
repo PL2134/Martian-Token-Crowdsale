@@ -44,12 +44,15 @@ These are the functions in the `KaseiCoin Token` contract:
 
 ## Interact with The Deployed Smart Contract
 To test the functionality of the crowdsale until this step, I used some test accounts to buy new tokens and then checking the balances of those accounts.
+
 ![Alt text](Images/buy_token_sidebar_before_01.png)
+
 ![Alt text](Images/buy_token_sidebar_before_02.png)
 
 Up to this step, because we have not finalised the crowdsale, hence only the gas fee was deducted from the account. We can see the account balance has dropped slightly:
 
 ![Alt text](Images/buy_token_after.png)
+
 ![Alt text](Images/buy_token_sidebar_after_01.png)
 
 The `weiRaised` is 3000000000000000000, which matches with the 3 ETH worth of KAI I tried to buy:
