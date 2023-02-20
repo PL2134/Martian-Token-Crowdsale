@@ -51,7 +51,12 @@ Up to this step, because we have not finalised the crowdsale, hence only the gas
 
 ![Alt text](Images/buy_token_after.png)
 ![Alt text](Images/buy_token_sidebar_after_01.png)
+
+The `weiRaised` is 3000000000000000000, which matches with the 3 ETH worth of KAI I tried to buy:
+
 ![Alt text](Images/buy_token_sidebar_after_02.png)
+
+The `totalSupply` and the `balanceOf` both show 3000000000000000000 as well:
 ![Alt text](Images/buy_token_sidebar_after_03.png)
 
 And this transaction can be varified in Ganache:
