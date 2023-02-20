@@ -134,3 +134,71 @@ On top of the basic crowdsale contract above, I have extended the crowdsale cont
 * The `TimedCrowdsale` contract: Allows me to set a time limit for my crowdsale by adding an opening time and a closing time.
 
 * The `RefundablePostDeliveryCrowdsale` contract: Allows me to refund my investors. Every time that I launch a crowdsale, I set a goal amount of ether to raise. If I don’t reach the goal, it’s a common practice to refund my investors.
+
+To enhance the KaseiCoin crowdsale with this added functionality, I have completed the following steps:
+
+1. Import the three OpenZeppelin contracts just described into the `KaseiCoinCrowdsale.sol` contract:
+
+2. In addition to the `Crowdsale` and `MintedCrowdsale` contracts, which your contract previously inherited from OpenZeppelin, I have my `KaseiCoinCrowdsale` contract inherit the following three contracts, which I just imported:
+
+    * `CappedCrowdsale`
+
+    * `TimedCrowdsale`
+
+    * `RefundablePostDeliveryCrowdsale`
+
+3. In the `KaseiCoinCrowdsale` constructor, I have added the following parameters:
+
+    * The `uint goal` parameter: The amount of ether that I hope to raise during the crowdsalethat—that is, the goal of the crowdsale.
+
+    * The `uint open` parameter: The opening time for the crowdsale.
+
+    * The `uint close` parameter: The closing time for the crowdsale.
+
+4. Complete the `KaseiCoinCrowdsale` constructor code by adding calls to the new contracts:
+
+![Alt text](Images/crowdsale_code_update.png)
+
+5. Update the `KaseiCoinCrowdsaleDeployer` contract to allow the deployment of the updated crowdsale contract. In the constructor of the deployer contract, add a new `uint` parameter named `goal` that will allow me to set the crowdsale goal.
+
+6. I previously added an instance of the `KaseiCoinCrowdsale` contract to the KaseiCoin deployer contract. Because I modified the `KaseiCoinCrowdsale` contract to support new functionality, I now need to update my previous code:
+
+![Alt text](Images/deployer_update_code.png)
+
+    Note that in the preceding code, I added values for the three new parameters. The `goal` parameter represents the amount of ether to raise during the crowdsale. The `now` parameter represents the crowdsale opening time. And, `now + 24 weeks` represents the closing time.
+
+    The `now` function returns the current Ethereum block timestamp in the form of seconds since the Unix epoch. The **Unix epoch** (also known as **Unix time**, **POSIX time**, or **Unix timestamp**) is an integer representing the number of seconds that have elapsed since January 1, 1970 (at midnight coordinated universal time, UTC), not counting leap seconds.
+
+7. Compile and test the updated contract by completing following steps:
+
+* I first compiled and deployed the updated `KaseiCoinCrowdsale` contract.
+
+![Alt text](Images/crowdsale_updated_compiled.png)
+
+![Alt text](Images/optional_challenge_deployer_deployed.png)
+
+* There are more functions in the updated `KaseiCoinCrowdsale` contract.
+
+![Alt text](Images/crowdsale_updated_01.png)
+
+![Alt text](Images/crowdsale_updated_02.png)
+
+* Send ether to the crowdsale from a different account. I have used one account to buy 80 ETH worth of KAI, and another account to buy 70 ETH worth of KAI. Notice the `balanceOf` each account has gone up accordingly.
+
+![Alt text](Images/buy_token_updated_80_ETH_completed.png)
+
+![Alt text](Images/buy_token_updated_70_ETH_completed.png)
+
+* I can also proof that the transactions have gone through by reviewing the transactions in Ganache:
+
+![Alt text](Images/80_ETH_sent.png)
+
+![Alt text](Images/70_ETH_sent.png)
+
+* For testing purpose, I have set the `close` time to `now + 5 minutes`.
+
+* When sending ether to the contract, I have met the `goal` of the contract, which is 150 ether. Then finalize the sale by using the `finalize` function of the `Crowdsale` contract. Note that to finalize the sale, `isOpen` must return false (`isOpen` comes from `TimedCrowdsale` and checks whether the `close` time has passed).
+
+![Alt text](Images/finalised_crowdsale.png)
+
+* Review my tokens in MetaMask. To do so in MetaMask, click Add Token, click Custom Token, and then enter the address of the token contract. Make sure to buy larger amounts of tokens to get the denomination to appear in my wallet as more than a few wei worth.
